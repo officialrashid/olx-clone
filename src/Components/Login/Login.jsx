@@ -1,24 +1,26 @@
-import React, { useState,useContext } from 'react';
-import {FirebaseContext} from '../../store/firebaseContext'
-import Logo from '../../olx-logo.png';
-import './Login.css';
-import {useHistory} from 'react-router-dom'
+import React, { useState, useContext } from "react";
+import { FirebaseContext } from "../../store/firebaseContext";
+import Logo from "../../olx-logo.png";
+import "./Login.css";
+import { useHistory } from "react-router-dom";
 function Login() {
-  const [email,setEmail] = useState('')
-  const [password,setPassword] = useState('')
-  const {firebase} = useContext(FirebaseContext)
-  const history = useHistory()
-  const handleLogin = (e) =>{
-  
-      e.preventDefault()
-     firebase.auth().signInWithEmailAndPassword(email,password).then(()=>{
-         
-      history.push('/')
-     }).catch((error)=>{
-      alert(error.message)
-     })
-  }
- 
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const { firebase } = useContext(FirebaseContext);
+  const history = useHistory();
+  const handleLogin = (e) => {
+    e.preventDefault();
+    firebase
+      .auth()
+      .signInWithEmailAndPassword(email, password)
+      .then(() => {
+        history.push("/");
+      })
+      .catch((error) => {
+        alert(error.message);
+      });
+  };
+
   return (
     <div>
       <div className="loginParentDiv">
@@ -30,7 +32,7 @@ function Login() {
             className="input"
             type="email"
             value={email}
-            onChange={(evt)=> setEmail(evt.target.value)}
+            onChange={(evt) => setEmail(evt.target.value)}
             id="fname"
             name="email"
             defaultValue="John"
@@ -42,7 +44,7 @@ function Login() {
             className="input"
             type="password"
             value={password}
-            onChange={(evt)=> setPassword(evt.target.value)}
+            onChange={(evt) => setPassword(evt.target.value)}
             id="lname"
             name="password"
             defaultValue="Doe"
@@ -51,9 +53,13 @@ function Login() {
           <br />
           <button>Login</button>
         </form>
-        <a onClick={()=>{
-          history.push('/signUp')
-        }}>Signup</a>
+        <a
+          onClick={() => {
+            history.push("/signUp");
+          }}
+        >
+          Signup
+        </a>
       </div>
     </div>
   );

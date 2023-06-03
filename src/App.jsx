@@ -6,7 +6,7 @@ import Login from "./Pages/Login";
 import Create from "./Pages/Create";
 import ViewPost from "./Pages/ViewPost";
 import { AuthContext, FirebaseContext } from "./store/firebaseContext";
-import Post from './store/PostContext'; // Adjusted import statement
+import Post from "./store/PostContext"; // Adjusted import statement
 
 function App() {
   const { user, setUser } = useContext(AuthContext);

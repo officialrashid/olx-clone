@@ -1,24 +1,28 @@
-import React, { useEffect, useContext, useState} from 'react';
-import Heart from '../../assets/Heart';
-import './Post.css';
-import { FirebaseContext } from '../../store/firebaseContext';
-import { postContext } from '../../store/PostContext';
-import {useHistory} from 'react-router-dom'
+import React, { useEffect, useContext, useState } from "react";
+import Heart from "../../assets/Heart";
+import "./Post.css";
+import { FirebaseContext } from "../../store/firebaseContext";
+import { postContext } from "../../store/PostContext";
+import { useHistory } from "react-router-dom";
 function Posts() {
-  const history = useHistory()
+  const history = useHistory();
   const { firebase } = useContext(FirebaseContext);
   const [products, setProducts] = useState([]);
- const {setPostDetails} = useContext(postContext)
+  const { setPostDetails } = useContext(postContext);
   useEffect(() => {
-    firebase.firestore().collection('products').get().then((response) => {
-      const allPost = response.docs.map((product) => {
-        return {
-          ...product.data(),
-          id: product.id,
-        };
+    firebase
+      .firestore()
+      .collection("products")
+      .get()
+      .then((response) => {
+        const allPost = response.docs.map((product) => {
+          return {
+            ...product.data(),
+            id: product.id,
+          };
+        });
+        setProducts(allPost);
       });
-      setProducts(allPost);
-    });
   }, [firebase]);
 
   return (
@@ -30,11 +34,14 @@ function Posts() {
         </div>
         <div className="cards">
           {products.map((product) => (
-            <div key={product.id} className="card" onClick={()=>{
-                  
-              setPostDetails(product);
-              history.push('/view');
-            }}>
+            <div
+              key={product.id}
+              className="card"
+              onClick={() => {
+                setPostDetails(product);
+                history.push("/view");
+              }}
+            >
               <div className="favorite">
                 <Heart />
               </div>

@@ -1,42 +1,43 @@
-import React, { useState , useContext } from 'react';
-import {useHistory} from 'react-router-dom'
-import Logo from '../../olx-logo.png';
-import './Signup.css';
-import { FirebaseContext } from '../../store/firebaseContext';
+import React, { useState, useContext } from "react";
+import { useHistory } from "react-router-dom";
+import Logo from "../../olx-logo.png";
+import "./Signup.css";
+import { FirebaseContext } from "../../store/firebaseContext";
 
 export default function Signup() {
-  const history = useHistory()
-  const [userName,setUserName] = useState('')
-  const [email,setEmail] = useState('')
-  const [phone,setPhone] = useState('')
-  const [password,setPassword] = useState('')
-  const {firebase} = useContext(FirebaseContext)
-  const handleSubmit = (e) =>{
-
-    e.preventDefault()
-    firebase.auth().createUserWithEmailAndPassword(email,password).then((result)=>{
-       
-      result.user.updateProfile({displayName : userName}).then(()=>{
-         
-        firebase.firestore().collection('users').add({
-
-          id: result.user.uid,
-          userName:userName,
-          email:email,
-          phone:phone
-        }).then(()=>{
-          history.push("/login")
-        })
-      })
-    })
-
-   
-  }
+  const history = useHistory();
+  const [userName, setUserName] = useState("");
+  const [email, setEmail] = useState("");
+  const [phone, setPhone] = useState("");
+  const [password, setPassword] = useState("");
+  const { firebase } = useContext(FirebaseContext);
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    firebase
+      .auth()
+      .createUserWithEmailAndPassword(email, password)
+      .then((result) => {
+        result.user.updateProfile({ displayName: userName }).then(() => {
+          firebase
+            .firestore()
+            .collection("users")
+            .add({
+              id: result.user.uid,
+              userName: userName,
+              email: email,
+              phone: phone,
+            })
+            .then(() => {
+              history.push("/login");
+            });
+        });
+      });
+  };
   return (
     <div>
       <div className="signupParentDiv">
         <img width="200px" height="200px" src={Logo}></img>
-        <form onSubmit={handleSubmit} >
+        <form onSubmit={handleSubmit}>
           <label htmlFor="fname">Username</label>
           <br />
           <input
@@ -67,7 +68,7 @@ export default function Signup() {
             className="input"
             type="number"
             value={phone}
-            onChange={(evt)=> setPhone(evt.target.value)}
+            onChange={(evt) => setPhone(evt.target.value)}
             id="lname"
             name="phone"
             defaultValue="Doe"
@@ -79,7 +80,7 @@ export default function Signup() {
             className="input"
             type="password"
             value={password}
-            onChange={(evt)=> setPassword(evt.target.value)}
+            onChange={(evt) => setPassword(evt.target.value)}
             id="lname"
             name="password"
             defaultValue="Doe"
@@ -88,9 +89,13 @@ export default function Signup() {
           <br />
           <button>Signup</button>
         </form>
-        <a onClick={()=>{
-          history.push('/login')
-        }}>Login</a>
+        <a
+          onClick={() => {
+            history.push("/login");
+          }}
+        >
+          Login
+        </a>
       </div>
     </div>
   );
