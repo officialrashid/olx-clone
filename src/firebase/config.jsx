@@ -1,6 +1,7 @@
 import firebase from "firebase";
 import 'firebase/auth'
 import 'firebase/firebase'
+import 'firebase/storage'
 import { createContext } from "react";
 const firebaseConfig = {
     apiKey: "AIzaSyDPdXHRYps4iLG3pmqO5epQCs8f4iDgtas",
